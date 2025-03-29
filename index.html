@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Title Case Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 20px;
+        }
+        textarea {
+            width: 80%;
+            height: 100px;
+            margin-bottom: 10px;
+        }
+        button {
+            margin: 5px;
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h2>Text Case Converter</h2>
+    <textarea id="inputText" placeholder="Enter text..."></textarea><br>
+    <button onclick="convertText('title')">Title Case</button>
+    <button onclick="convertText('upper')">UPPERCASE</button>
+    <button onclick="convertText('lower')">lowercase</button>
+    <button onclick="convertText('camel')">CamelCase</button>
+    <button onclick="convertText('snake')">snake_case</button>
+    <br>
+    <h3>Converted Text</h3>
+    <textarea id="outputText" readonly></textarea><br>
+    <button onclick="copyText()">Copy Result</button>
+    
+    <script>
+        function convertText(type) {
+            let text = document.getElementById('inputText').value;
+            let result = '';
+            
+            switch(type) {
+                case 'title':
+                    result = text.replace(/\w\S*/g, (w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase());
+                    break;
+                case 'upper':
+                    result = text.toUpperCase();
+                    break;
+                case 'lower':
+                    result = text.toLowerCase();
+                    break;
+                case 'camel':
+                    result = text.replace(/(?:^|\s)([a-z])/g, (_, c) => c.toUpperCase()).replace(/\s+/g, '');
+                    break;
+                case 'snake':
+                    result = text.toLowerCase().replace(/\s+/g, '_');
+                    break;
+            }
+            
+            document.getElementById('outputText').value = result;
+        }
+        
+        function copyText() {
+            let output = document.getElementById('outputText');
+            output.select();
+            document.execCommand('copy');
+            alert('Text copied!');
+        }
+    </script>
+</body>
+</html>
